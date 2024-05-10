@@ -8,7 +8,7 @@
 // The Engine constructor
 Engine::Engine() {
 	VideoMode vm(VideoMode::getDesktopMode().width / 2, VideoMode::getDesktopMode().height / 2);
-	m_Window(vm, "Particles", Style::Default);
+	RenderWindow m_Window(vm, "Particles", Style::Default);
 }
         
 // Private functions for internal use only
@@ -16,7 +16,7 @@ void Engine::input() {
 	Event event;
 	while (m_Window.pollEvent(event)) {
 		if (event.type == Event::Closed) {
-			window.close();
+			m_Window.close();
 		}
 		if (event.type == sf::Event::MouseButtonPressed) {
 			if (event.mouseButton.button == sf::Mouse::Left) {
@@ -42,6 +42,7 @@ void Engine::update(float dtAsSeconds) {
 		}
 	}
 }
+
 void Engine::draw() {
 	m_Window.clear();
 	for (int i = 0; i < m_particles.size(); i++) {
