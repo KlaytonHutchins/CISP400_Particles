@@ -14,7 +14,7 @@ Engine::Engine() {
 // Private functions for internal use only
 void Engine::input() {
 	Event event;
-	while (window.pollEvent(event)) {
+	while (m_Window.pollEvent(event)) {
 		if (event.type == Event::Closed) {
 			window.close();
 		}
@@ -29,7 +29,7 @@ void Engine::input() {
 		}
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Escape)) {
-		window.close();
+		m_Window.close();
 	}
 }
 void Engine::update(float dtAsSeconds) {
@@ -52,7 +52,7 @@ void Engine::draw() {
 
 // Run will call all the private functions
 void Engine::run() {
-	Clock clock();
+	Clock clock;
 
 	cout << "Starting Particle unit tests..." << endl;
 	Particle p(m_Window, 4, { (int)m_Window.getSize().x / 2, (int)m_Window.getSize().y / 2 });
