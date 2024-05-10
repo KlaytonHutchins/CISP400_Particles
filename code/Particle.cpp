@@ -15,7 +15,7 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
 	m_color1 = Color::White;
 	m_color2 = Color(rand() % (256), rand() % (256), rand() % (256));
 
-	double theta = (rand() % (M_PI / 2.0));
+	double theta = fmod(rand(), (M_PI / 2));
 	double dTheta = 2 * M_PI / (numPoints - 1);
 	for (auto j = 0; j < numPoints; j++) {
 		double r, dx, dy;
@@ -28,15 +28,14 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
 	}
 }
 
-virtual void Particle::draw(RenderTarget& target, RenderStates states) const override {
+void Particle::draw(RenderTarget& target, RenderStates states) const {
 	VertexArray lines(TriangleFan, m_numPoints + 1);
 
-	Vector2f center = target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane);
-	lines[0].position = center;
+	lines[0].position = m_centerCoordinate;
 	lines[0].color = m_color1;
 
 	for (auto j = 1; j <= m_numPoints; ++j) {
-		Vector2f coords = target.mapCoordsToPixel(Vector2f(m_A(0, j - 1), m_A(1, j - 1)));
+		Vector2f coords = Vector2f(m_A(0, j - 1), m_A(1, j - 1));
 		lines[j].position = coords;
 		lines[j].color = m_color2;
 	}
